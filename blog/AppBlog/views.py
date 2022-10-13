@@ -97,3 +97,6 @@ def buscar_jugador(request):
     respuesta = f"Estoy buscando el jugador: {request.GET['jugador']}"
 
     return HttpResponse(respuesta)
+
+def buscar_entrenador(request):
+    respuesta = f"Estoy buscando el entrenador: {request.GET['entrenador']}"
