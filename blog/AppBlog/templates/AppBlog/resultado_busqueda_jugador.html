@@ -1,0 +1,11 @@
+<p>Los jugadores encontrados son:</p>
+
+{% if jugadores_encontrados %}
+
+<ul>
+{% for jugador in jugadores_encontrados %}
+    <li>{{jugador.name}} {{jugador.surname}} - {{jugador.position}}</li>
+{% endfor %}
+</ul>
+
+{% endif %}

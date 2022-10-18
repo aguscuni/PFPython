@@ -87,3 +87,63 @@ def cargar_equipo(request):
     contexto = {"formulario": mi_formulario}
 
     return render(request, "AppBlog/cargar_equipo.html", contexto)
+
+
+def busqueda_jugador(request):
+    return render(request, "AppBlog/busqueda_jugador.html")
+
+
+def buscar_jugador(request):
+    if not request.GET["jugador"]:
+        return HttpResponse("No enviaste datos")
+
+    else:
+        jugador_a_buscar = request.GET["jugador"]
+        jugadores = Jugador.objects.filter(
+            surname=jugador_a_buscar
+        ) or Jugador.objects.filter(country=jugador_a_buscar)
+
+        contexto = {"jugador": jugador_a_buscar, "jugadores_encontrados": jugadores}
+
+        return render(request, "AppBlog/resultado_busqueda_jugador.html", contexto)
+
+
+def busqueda_entrenador(request):
+    return render(request, "AppBlog/busqueda_entrenador.html")
+
+
+def buscar_entrenador(request):
+    if not request.GET["entrenador"]:
+        return HttpResponse("No enviaste datos")
+
+    else:
+        entrenador_a_buscar = request.GET["entrenador"]
+        entrenadores = Entrenador.objects.filter(
+            surname=entrenador_a_buscar
+        ) or Entrenador.objects.filter(country=entrenador_a_buscar)
+
+        contexto = {
+            "entrenador": entrenador_a_buscar,
+            "entrenadores_encontrados": entrenadores,
+        }
+
+        return render(request, "AppBlog/resultado_busqueda_entrenador.html", contexto)
+
+
+def busqueda_equipo(request):
+    return render(request, "AppBlog/busqueda_equipo.html")
+
+
+def buscar_equipo(request):
+    if not request.GET["equipo"]:
+        return HttpResponse("No enviaste datos")
+
+    else:
+        equipo_a_buscar = request.GET["equipo"]
+        equipos = Equipo.objects.filter(name=equipo_a_buscar) or Equipo.objects.filter(
+            country=equipo_a_buscar
+        )
+
+        contexto = {"equipo": equipo_a_buscar, "equipos_encontrados": equipos}
+
+        return render(request, "AppBlog/resultado_busqueda_equipo.html", contexto)

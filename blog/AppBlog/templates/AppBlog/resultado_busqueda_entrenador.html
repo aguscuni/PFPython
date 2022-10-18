@@ -1,0 +1,11 @@
+<p>Los entrenadores encontrados son:</p>
+
+{% if entrenadores_encontrados %}
+
+<ul>
+{% for entrenador in entrenadores_encontrados %}
+    <li>{{entrenador.name}} {{entrenador.surname}} - ({{entrenador.country}})</li>
+{% endfor %}
+</ul>
+
+{% endif %}
