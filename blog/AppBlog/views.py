@@ -87,13 +87,3 @@ def cargar_equipo(request):
     contexto = {"formulario": mi_formulario}
 
     return render(request, "AppBlog/cargar_equipo.html", contexto)
-
-
-def busqueda_jugador(request):
-    return render(request, "AppBlog/busqueda_jugador.html")
-
-
-def buscar_jugador(request):
-    respuesta = f"Estoy buscando el jugador: {request.GET['jugador']}"
-
-    return HttpResponse(respuesta)
