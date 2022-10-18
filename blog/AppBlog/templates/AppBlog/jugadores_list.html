@@ -1,0 +1,16 @@
+
+<h1> Jugadores cargados </h1>
+<ul>
+    {% for jugador in object_list %}
+    
+    <li>
+        <p>Nombre: {{ jugador.name }} {{jugador.surname}}</p>
+        <p>
+            <a href="{% url 'JugadorDetail' jugador.id %}">Ver jugador</a>
+            <a href="{% url 'JugadorUpdate' jugador.id %}">Editar</a>
+            <a href="{% url 'JugadorDelete' jugador.id %}">Borrar</a>
+        </p>
+        
+    </li>
+    {% endfor %}
+</ul>

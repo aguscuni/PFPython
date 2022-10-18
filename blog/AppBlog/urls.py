@@ -29,6 +29,12 @@ from AppBlog.views import (
     buscar_entrenador,
     busqueda_equipo,
     buscar_equipo,
+    listar_equipos,
+    Jugadorlist,
+    JugadorDetail,
+    JugadorCreate,
+    JugadorUpdate,
+    JugadorDelete,
 )
 
 urlpatterns = [
@@ -45,4 +51,10 @@ urlpatterns = [
     path("buscar-entrenador", buscar_entrenador, name="buscar-entrenador"),
     path("busqueda-equipo", busqueda_equipo, name="busqueda-equipo"),
     path("buscar-equipo", buscar_equipo, name="buscar-equipo"),
+    path("listar-equipos", listar_equipos, name="listar-equipos"),
+    path("jugador/list", Jugadorlist.as_view(), name="JugadorList"),
+    path("r'(?P<pk>\d+)^$", JugadorDetail.as_view(), name="JugadorDetail"),
+    path("jugador-nuevo", JugadorCreate.as_view(), name="JugadorCreate"),
+    path("editar/<pk>", JugadorUpdate.as_view(), name="JugadorUpdate"),
+    path("borrar/<pk>", JugadorDelete.as_view(), name="JugadorDelete"),
 ]

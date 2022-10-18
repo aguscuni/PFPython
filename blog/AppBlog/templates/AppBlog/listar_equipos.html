@@ -1,0 +1,12 @@
+<p>Los equipos encontrados son:</p>
+
+{% if equipos_encontrados %}
+
+<ul>
+{% for equipo in equipos_encontrados %}
+    <li>{{equipo.name}} ({{equipo.country}})</li>
+{% endfor %}
+</ul>
+
+{% endif %}
+

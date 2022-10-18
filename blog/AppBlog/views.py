@@ -1,4 +1,3 @@
-from unicodedata import name
 from django.shortcuts import render
 from django.http import HttpResponse
 from AppBlog.forms import JugadorFormulario, EntrenadorFormulario, EquipoFormulario
@@ -147,3 +146,51 @@ def buscar_equipo(request):
         contexto = {"equipo": equipo_a_buscar, "equipos_encontrados": equipos}
 
         return render(request, "AppBlog/resultado_busqueda_equipo.html", contexto)
+
+
+def listar_equipos(request):
+
+    todos_los_equipos = Equipo.objects.all()
+
+    contexto = {"equipos_encontrados": todos_los_equipos}
+
+    return render(request, "AppBlog/listar_equipos.html", contexto)
+
+
+from django.views.generic import (
+    ListView,
+    DetailView,
+    CreateView,
+    UpdateView,
+    DeleteView,
+)
+
+
+class Jugadorlist(ListView):
+    model = Jugador
+    template_name = "AppBlog/jugadores_list.html"
+
+
+class JugadorDetail(DetailView):
+    model = Jugador
+    template_name = "AppBlog/jugadores_detalle.html"
+
+
+from django.urls import reverse
+
+
+class JugadorCreate(CreateView):
+    model = Jugador
+    success_url = "/AppBlog/jugador/list"
+    fields = ["name", "surname", "position", "country", "birth"]
+
+
+class JugadorUpdate(UpdateView):
+    model = Jugador
+    success_url = "/AppBlog/jugador/list"
+    fields = ["name", "surname", "position", "country", "birth"]
+
+
+class JugadorDelete(DeleteView):
+    model = Jugador
+    success_url = "/AppBlog/jugador/list"
