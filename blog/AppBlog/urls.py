@@ -35,6 +35,8 @@ from AppBlog.views import (
     JugadorCreate,
     JugadorUpdate,
     JugadorDelete,
+    MyLogin,
+    MyLogout,
 )
 
 urlpatterns = [
@@ -57,4 +59,5 @@ urlpatterns = [
     path("jugador-nuevo", JugadorCreate.as_view(), name="JugadorCreate"),
     path("editar/<pk>", JugadorUpdate.as_view(), name="JugadorUpdate"),
     path("borrar/<pk>", JugadorDelete.as_view(), name="JugadorDelete"),
+    path("login", MyLogin.as_view(), name="Login"),
 ]

@@ -2,6 +2,9 @@ from django.shortcuts import render
 from django.http import HttpResponse
 from AppBlog.forms import JugadorFormulario, EntrenadorFormulario, EquipoFormulario
 from AppBlog.models import Jugador, Entrenador, Equipo
+from django.contrib.auth import authenticate
+from django.contrib.auth.forms import AuthenticationForm
+from django.contrib.auth.views import LoginView, LogoutView
 
 # Create your views here.
 
@@ -193,4 +196,13 @@ class JugadorUpdate(UpdateView):
 
 class JugadorDelete(DeleteView):
     model = Jugador
+    success_url = "/AppBlog/jugador/list"
+
+
+class MyLogin(LoginView):
+    template_name = "AppBlog/login.html"
+
+
+class MyLogout(LogoutView):
+    template_name = "AppBlog/logout.html"
     success_url = "/AppBlog/jugador/list"
