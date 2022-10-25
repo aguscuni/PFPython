@@ -1,6 +1,11 @@
 from django.shortcuts import render
 from django.http import HttpResponse
-from AppBlog.forms import JugadorFormulario, EntrenadorFormulario, EquipoFormulario
+from AppBlog.forms import (
+    JugadorFormulario,
+    EntrenadorFormulario,
+    EquipoFormulario,
+    UserEditionForm,
+)
 from AppBlog.models import Jugador, Entrenador, Equipo
 from django.contrib.auth import authenticate
 from django.contrib.auth.forms import AuthenticationForm, UserCreationForm
@@ -185,29 +190,29 @@ from django.views.generic import (
 )
 
 
-class Jugadorlist(ListView, LoginRequiredMixin):
+class Jugadorlist(LoginRequiredMixin, ListView):
     model = Jugador
     template_name = "AppBlog/jugadores_list.html"
 
 
-class JugadorDetail(DetailView, LoginRequiredMixin):
+class JugadorDetail(LoginRequiredMixin, DetailView):
     model = Jugador
     template_name = "AppBlog/jugadores_detalle.html"
 
 
-class JugadorCreate(CreateView, LoginRequiredMixin):
+class JugadorCreate(LoginRequiredMixin, CreateView):
     model = Jugador
     success_url = "/AppBlog/jugador/list"
     fields = ["name", "surname", "position", "country", "birth"]
 
 
-class JugadorUpdate(UpdateView, LoginRequiredMixin):
+class JugadorUpdate(LoginRequiredMixin, UpdateView):
     model = Jugador
     success_url = "/AppBlog/jugador/list"
     fields = ["name", "surname", "position", "country", "birth"]
 
 
-class JugadorDelete(DeleteView, LoginRequiredMixin):
+class JugadorDelete(LoginRequiredMixin, DeleteView):
     model = Jugador
     success_url = "/AppBlog/jugador/list"
 
@@ -216,7 +221,7 @@ class MyLogin(LoginView):
     template_name = "AppBlog/login.html"
 
 
-class MyLogout(LogoutView, LoginRequiredMixin):
+class MyLogout(LoginRequiredMixin, LogoutView):
     template_name = "AppBlog/logout.html"
 
 
@@ -236,3 +241,24 @@ def register(request):
         form = UserCreationForm()
 
     return render(request, "AppBlog/registro.html", {"form": form})
+
+
+@login_required
+def editar_perfil(request):
+    user = request.user
+
+    if request.method != "POST":
+        form = UserEditionForm(initial={"email": user.email})
+    else:
+        form = UserEditionForm(request.POST)
+        if form.is_valid():
+            data = form.cleaned_data
+            user.email = data["email"]
+            user.first_name = data["first_name"]
+            user.last_name = data["last_name"]
+            user.set_password(data["password1"])
+            user.save()
+            return render(request, "AppBlog/inicio.html")
+
+    contexto = {"user": user, "form": form}
+    return render(request, "AppBlog/editar_perfil.html", contexto)
