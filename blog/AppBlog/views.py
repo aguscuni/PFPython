@@ -5,8 +5,9 @@ from AppBlog.forms import (
     EntrenadorFormulario,
     EquipoFormulario,
     UserEditionForm,
+    AvatarForm,
 )
-from AppBlog.models import Jugador, Entrenador, Equipo
+from AppBlog.models import Jugador, Entrenador, Equipo, Avatar
 from django.contrib.auth import authenticate
 from django.contrib.auth.forms import AuthenticationForm, UserCreationForm
 from django.contrib.auth.views import LoginView, LogoutView
@@ -262,3 +263,18 @@ def editar_perfil(request):
 
     contexto = {"user": user, "form": form}
     return render(request, "AppBlog/editar_perfil.html", contexto)
+
+
+@login_required
+def agregar_avatar(request):
+    if request.method != "POST":
+        form = AvatarForm()
+    else:
+        form = AvatarForm(request.POST, request.FILES)
+        if form.is_valid():
+            Avatar.objects.filter(user=request.user).delete()
+            form.save()
+            return render(request, "AppBlog/inicio.html")
+
+    contexto = {"form": form}
+    return render(request, "AppBlog/avatar_form.html", contexto)
