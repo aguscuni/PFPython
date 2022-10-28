@@ -127,3 +127,8 @@ LOGIN_REDIRECT_URL = "/AppBlog/jugador/list"
 
 LOGIN_URL = "/AppBlog/login"
 LOGOUT_REDIRECT_URL = LOGIN_URL
+
+import os
+
+MEDIA_URL = "/media/"
+MEDIA_ROOT = os.path.join(BASE_DIR, "media")

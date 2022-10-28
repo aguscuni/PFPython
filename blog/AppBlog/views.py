@@ -19,7 +19,12 @@ from django.contrib.auth.decorators import login_required
 
 @login_required
 def inicio(request):
-    return render(request, "AppBlog/inicio.html")
+    avatar = Avatar.objects.filter(user=request.user).first()
+    if avatar is not None:
+        contexto = {"avatar": avatar.imagen.url}
+    else:
+        contexto = {}
+    return render(request, "AppBlog/inicio.html", contexto)
 
 
 @login_required
